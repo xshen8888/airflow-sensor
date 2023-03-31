@@ -35,6 +35,7 @@ def format_run_id(dt: str, tm: str) -> str:
 
 @task
 def get_most_recent_run_id(cron_schedule: str) -> str:
+    # Must call iter.get_prev() twice due to how Airflow run_id uses the previous schedule, not the most recent.
     iter = croniter(cron_schedule)
     iter.get_prev(datetime)
     dt = iter.get_prev(datetime)
@@ -44,11 +45,6 @@ def get_most_recent_run_id(cron_schedule: str) -> str:
 
 
 class WaitForAirflowDag(PythonInstanceTask):
-    """
-    Add documentation here for your plugin.
-    This plugin creates an object store file sensor that waits and exits only when the file exists.
-    """
-
     _DAG_ID: str = "dag_id"
     _RUN_ID: str = "run_id"
     _TASK_ID: str = "task_id"
