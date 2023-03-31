@@ -31,7 +31,7 @@ def wf() -> None:
     t1 = sensor(
         dag_id='dag-1', 
         run_id=get_most_recent_run_id(cron_schedule='*/30 * * * *'),
-        task_id='task-2'
+        task_id='task-2'  # or =None
     )
     t2 = downstream_task()
     t1 >> t2

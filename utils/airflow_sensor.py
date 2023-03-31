@@ -3,7 +3,7 @@ import requests
 import boto3
 import json
 
-from typing import Tuple, Any
+from typing import Tuple, Any, Optional
 import logging
 from datetime import timedelta, datetime
 from time import sleep
@@ -65,7 +65,7 @@ class WaitForAirflowDag(PythonInstanceTask):
         inputs = {
             self._DAG_ID: str, 
             self._RUN_ID: str, 
-            self._TASK_ID: str
+            self._TASK_ID: Optional[str]
         }
         outputs = {
             self._DAG_SUCCESS: bool
