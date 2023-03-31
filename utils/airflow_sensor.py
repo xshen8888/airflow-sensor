@@ -19,6 +19,12 @@ AIRFLOW_API_URL = {
     'prod': 'http://localhost:8080/api/v1',
 }
 
+AIRFLOW_API_SECRET_ID = {
+    'dev': 'dev-airflow-api-creds',
+    'beta': 'beta-airflow-api-creds',
+    'prod': 'prod-airflow-api-creds'
+}
+
 
 logging.basicConfig(level=logging.INFO)
 run_id_template = "scheduled__{dt}T{tm}+00:00"
@@ -93,7 +99,7 @@ class WaitForAirflowDag(PythonInstanceTask):
 
 
 def get_airflow_api_credentials() -> Tuple[str, str]:
-    airflow_api_secret_id = f'{get_domain()}-airflow-api-creds'
+    airflow_api_secret_id = AIRFLOW_API_SECRET_ID[get_domain()]
     logging.info(f'airflow_api_secret_id: {airflow_api_secret_id}')
     secrets_manager_client = boto3.client("secretsmanager", region_name="us-east-1")
     response = secrets_manager_client.get_secret_value(SecretId=airflow_api_secret_id)
