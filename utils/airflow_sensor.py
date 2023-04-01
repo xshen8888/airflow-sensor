@@ -110,10 +110,6 @@ def get_airflow_api_credentials() -> Tuple[str, str]:
     return un, pwd
 
 
-def is_dagrun_complete_1(dag_id: str, run_id:str, task_id: str = None) -> bool:
-    return False
-
-
 def is_dagrun_complete(dag_id: str, run_id:str, task_id: str = None) -> bool:
     """
     Check if a given DAG run is complete.
